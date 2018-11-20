@@ -21,8 +21,13 @@ class TeamDao {
     String teamName;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
-
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            targetEntity = PlayerDao.class,
+            orphanRemoval = true,
+            mappedBy = "team"
+    )
     List<PlayerDao> playerList;
 
 

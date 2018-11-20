@@ -1,90 +1,134 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import TeamsTable from './components/TeamsTable/TeamsTable';
-import {Container, Button} from 'semantic-ui-react';
-import {PLAYER_FIELD, TEAM_FIELD} from "./components/utils/Constants";
-import {postData, postDataAxios} from "./components/utils/cricketApi";
+import { Container } from 'semantic-ui-react';
+import { PLAYER_FIELD, TEAM_FIELD, HOME_ROUTE, TEAM_MGMT_ROUTE, TEAM_2_KEY, TEAM_1_KEY, TEAM_MGMT_DROPDOWN_KEY, TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, ACTIVE_ITEM_KEY, ADD_TEAM_ONCLICK, UPDATE_TEAM_ONCLICK } from "./components/utils/Constants";
+import { postData, getData, updateData } from "./components/utils/cricketApi";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Nav from './components/Navigation/nav';
+import PlayGame from './components/PlayGame/PlayGame';
+import TeamManagement from './components/TeamManagement/TeamManagement';
+import { setMyState, INITIAL_STATE } from './components/utils/stateUtils';
 
-const INITIAL_STATE = {
-    teams: [{
-        name: "Team 1",
-        players: [
-            {name: "player 1"},
-            {name: "player 2"},
-            {name: "player 3"},
-            {name: "player 4"},
-            {name: "player 5"},
-            {name: "player 6"},
-            {name: "player 7"},
-            {name: "player 8"},
-            {name: "player 9"},
-            {name: "player 10"},
-            {name: "player 11"}
 
-        ]
-
-    },
-        {
-            name: "Team 2",
-            players: [
-                {name: "player 1"},
-                {name: "player 2"},
-                {name: "player 3"},
-                {name: "player 4"},
-                {name: "player 5"},
-                {name: "player 6"},
-                {name: "player 7"},
-                {name: "player 8"},
-                {name: "player 9"},
-                {name: "player 10"},
-                {name: "player 11"}
-
-            ]
-        }]
-};
 
 class App extends Component {
-    state = {...INITIAL_STATE};
+    state = { ...INITIAL_STATE };
 
-    onChange = (e) => {
-        let teams = this.state.teams;
-        const field = e.target.dataset["field"];
-        const index = e.target.dataset.index;
-        const team = e.target.dataset.team - 1;
+    onChange = (e, obj) => {
+        const field = obj.datafield;
         switch (field) {
             case PLAYER_FIELD:
-                teams[team].players[index] = e.target.value;
+                this.handleInputChange(
+                    [TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, "players", obj.dataindex, "name"],
+                    obj.value)
                 break;
             case TEAM_FIELD:
-                teams[team].name = e.target.value;
+                this.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, "name"],
+                    obj.value)
                 break;
             default:
                 console.log("should never get here, check the datase property field of " + e.target);
                 console.log(e.target);
         }
-        this.setState({teams});
     };
 
-    onClick = (e) => {
-        postData(`http://localhost:8080/api/saveTeamData`, this.state.teams)
-            .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
-            .catch(error => console.error(error));
-
+    onClick = (e, type) => {
+        let url = ``;
+        if (type === ADD_TEAM_ONCLICK) {
+            url = `addNewTeam`;
+            postData(url, this.state[TEAM_MGMT_STATE_KEY][MANAGED_TEAM_KEY])
+                .then(team => this.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY], team)) // JSON-string from `response.json()` call
+                .catch(error => console.error(error));
+        }
+        else if (type === UPDATE_TEAM_ONCLICK) {
+            url = `updateTeamById/${this.state.playGameState.dropdownStates[TEAM_MGMT_DROPDOWN_KEY]}`;
+            updateData(url, this.state[TEAM_MGMT_STATE_KEY][MANAGED_TEAM_KEY])
+                .then(team => this.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY], team)) // JSON-string from `response.json()` call
+                .catch(error => console.error(error));
+        }
     };
+
+    onDropdownChangeHandler = (e, key, value) => {
+        const dropdownStates = this.state.playGameState.dropdownStates;
+        switch (key) {
+            case TEAM_1_KEY: dropdownStates[TEAM_1_KEY] = value;
+                break;
+            case TEAM_2_KEY: dropdownStates[TEAM_2_KEY] = value;
+                break;
+            case TEAM_MGMT_DROPDOWN_KEY: dropdownStates[TEAM_MGMT_DROPDOWN_KEY] = value;
+                break;
+            default:
+                console.log("should be unreachable, but you are here,check the component" + e.target);
+        }
+        this.setState(prevState => ({ playGameState: { ...prevState.playGameState, dropdownStates: dropdownStates } }));
+    }
+
+    componentDidMount() {
+        this.fetchAllTeams();
+
+    }
+
+    fetchAllTeams = () => {
+        getData(`getAllTeams`)
+            .then(teams => {
+                const dropdownStates = {
+                    [TEAM_1_KEY]: teams[0].id || "",
+                    [TEAM_2_KEY]: teams[1].id || "",
+                    [TEAM_MGMT_DROPDOWN_KEY]: teams[0].id || "",
+                };
+                this.setState(prevState => {
+                    return {
+                        teams,
+                        playGameState: {
+                            ...prevState.playGameState,
+                            dropdownStates: dropdownStates
+                        }
+                    }
+                });
+
+            })
+            .catch(error => console.log(error));
+    }
+    handleInputChange = (pathArray, value) => {
+        this.setState(setMyState(this.state, pathArray, value));
+    }
+
+    handleLinkClick = (e, { to }) => {
+        this.handleInputChange([ACTIVE_ITEM_KEY], to);
+    }
 
     render() {
         return (
-            <Container>
-                <TeamsTable
-                    teams={this.state.teams}
-                    onChange={this.onChange}
-                />
-                <Button onClick={this.onClick}>
-                    Submit
-                </Button>
-            </Container>
+            <Router>
+                <Container>
+                    <Nav handleLinkClick={this.handleLinkClick} activeItem={this.state[ACTIVE_ITEM_KEY]} />
+                    {/* {JSON.stringify(this.state, null, 2)} */}
+                    <Route exact path={HOME_ROUTE}
+                        render={props => <PlayGame
+                            teams={this.state.teams}
+                            onDropdownChangeHandler={this.onDropdownChangeHandler}
+                            dropdownStates={this.state.playGameState.dropdownStates}
+                        />}
+                    />
+                    <Route exact path={TEAM_MGMT_ROUTE}
+                        render={props =>
+                            <TeamManagement
+                                teams={this.state.teams}
+                                managedTeam={this.state[TEAM_MGMT_STATE_KEY][MANAGED_TEAM_KEY]}
+                                onChange={this.onChange}
+                                onClick={this.onClick}
+                                onDropdownChangeHandler={this.onDropdownChangeHandler}
+                                dropdownStates={this.state.playGameState.dropdownStates}
+                                handleInputChange={this.handleInputChange}
+                                fetchAllTeams={this.fetchAllTeams}
+
+                            />}
+                    />
+                </Container>
+            </Router>
         );
     }
+
 }
 
 export default App;

@@ -4,5 +4,7 @@ import lombok.Data;
 
 public @Data
 class PlayerDto {
-    String name;
+    private Long id;
+    private String name;
+
 }

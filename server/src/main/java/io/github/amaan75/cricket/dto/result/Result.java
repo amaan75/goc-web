@@ -1,4 +1,4 @@
-package io.github.amaan75.cricket.dto;
+package io.github.amaan75.cricket.dto.result;
 
 import lombok.Data;
 
