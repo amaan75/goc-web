@@ -1,6 +1,6 @@
-const BASE_URL = `http://172.31.99.228:8080/api/`;
+const BASE_URL = `http://${window.location.hostname}:8080/api/`;
+
 export const postData = (url = ``, data = {}, timeOut = 10000) => {
-    console.log(JSON.stringify(data, null, 2));
     url = `${BASE_URL}${url}`;
     // Default options are marked with *
     return fetchWithTimeOut(fetch(url, {

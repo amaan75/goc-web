@@ -52,7 +52,7 @@ class App extends Component {
         }
     };
 
-    onClick = (e, type) => {
+    onClick = (unused, type) => {
         let url = ``;
         if (type === ADD_TEAM_ONCLICK) {
             url = `addNewTeam/postgres`;
@@ -105,9 +105,27 @@ class App extends Component {
                         }
                     }
                 });
-
+                this.fetchTeamData(this.state.playGameState.dropdownStates[TEAM_MGMT_DROPDOWN_KEY])
             })
             .catch(error => console.log(error));
+    }
+
+    fetchTeamData = (value, customActionOnSuccess, customActionOnError) => {
+        if (value) {
+            this.setState({ isLoading: true });
+            getData(`getTeamById/${value}`)
+                .then(team => {
+                    this.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY], team);
+                    if (customActionOnSuccess)
+                        customActionOnSuccess();
+                })
+                .catch(error => {
+                    console.log(error)
+                    if (customActionOnError)
+                        customActionOnError();
+                });
+
+        }
     }
 
     handleInputChange = (pathArray, value) => {
@@ -142,6 +160,7 @@ class App extends Component {
                                 dropdownStates={this.state.playGameState.dropdownStates}
                                 handleInputChange={this.handleInputChange}
                                 fetchAllTeams={this.fetchAllTeams}
+                                fetchTeamData={this.fetchTeamData}
 
                             />}
                     />
