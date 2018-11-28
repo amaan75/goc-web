@@ -1,6 +1,7 @@
-package io.github.amaan75.cricket.dao;
+package io.github.amaan75.cricket.dao.sql;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,9 +12,9 @@ public @Data
 class TeamDao {
 
     @Basic
-    @Id
     @Column(name = "TEAM_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     Long id;
 
     @Basic

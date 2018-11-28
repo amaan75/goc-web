@@ -1,5 +1,7 @@
 package io.github.amaan75.cricket.service.impl;
 
+import io.github.amaan75.cricket.dao.nosql.MongoTeam;
+import io.github.amaan75.cricket.dao.nosql.mongocruds.MongoTeamRepository;
 import io.github.amaan75.cricket.dao.sql.TeamDao;
 import io.github.amaan75.cricket.dao.sql.cruds.TeamDaoRepository;
 import io.github.amaan75.cricket.dto.TeamDto;
@@ -13,18 +15,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.amaan75.cricket.utils.MatchUtils.fromTeamDao;
-import static io.github.amaan75.cricket.utils.MatchUtils.fromTeamDto;
+import static io.github.amaan75.cricket.utils.MatchUtils.*;
 
 @Service
-public class GamesService implements MatchService {
+public class MatchServiceImpl implements MatchService {
 
     private final
     TeamDaoRepository teamDaoRepository;
 
+    private final
+    MongoTeamRepository mongoTeamRepository;
+
     @Autowired
-    public GamesService(TeamDaoRepository teamDaoRepository) {
+    public MatchServiceImpl(TeamDaoRepository teamDaoRepository, MongoTeamRepository mongoTeamRepository) {
         this.teamDaoRepository = teamDaoRepository;
+        this.mongoTeamRepository = mongoTeamRepository;
     }
 
     @Override
@@ -33,7 +38,6 @@ public class GamesService implements MatchService {
         teams.forEach(team -> teamDaoList.add(MatchUtils.fromTeamDto(team)));
         return teamDaoRepository.saveAll(teamDaoList);
     }
-
 
     @Override
     public List<TeamDto> getAllTeams() {
@@ -62,7 +66,11 @@ public class GamesService implements MatchService {
     @Override
     public TeamDto addNewTeam(TeamDto team) {
         return fromTeamDao(teamDaoRepository.save(fromTeamDto(team)));
+    }
 
+    @Override
+    public TeamDto addNewTeamToMongo(TeamDto teamDto) {
+        return fromMongoTeam(mongoTeamRepository.save(mongoTeamFromTeamDto(teamDto)));
     }
 
     @Override

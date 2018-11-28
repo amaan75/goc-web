@@ -1,19 +1,20 @@
-package io.github.amaan75.cricket.dao.mongo;
+package io.github.amaan75.cricket.dao.nosql;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
-@AllArgsConstructor()
-public class MongoTeam {
+
+public @Data
+@NoArgsConstructor
+@Document(collection = "CRICKET_TEAM")
+class MongoTeam {
     @Id
-    public String id;
-    public String name;
+    private String id;
+    private String name;
+    private List<MongoPlayer> players;
 
-    @Override
-    public String toString() {
-        return "MongoTeam{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
 }

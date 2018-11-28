@@ -1,6 +1,7 @@
-
-export const postData = (url = ``, data = {}, timeOut = 50000) => {
-    url = `http://172.31.99.228:8080/api/${url}`;
+const BASE_URL = `http://172.31.99.228:8080/api/`;
+export const postData = (url = ``, data = {}, timeOut = 10000) => {
+    console.log(JSON.stringify(data, null, 2));
+    url = `${BASE_URL}${url}`;
     // Default options are marked with *
     return fetchWithTimeOut(fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -25,7 +26,7 @@ export const postData = (url = ``, data = {}, timeOut = 50000) => {
 };
 
 export const getData = (url = ``, timeOut = 10000) => {
-    url = `http://172.31.99.228:8080/api/${url}`;
+    url = `${BASE_URL}${url}`;
     return fetchWithTimeOut(fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
@@ -57,8 +58,8 @@ const fetchWithTimeOut = (fetchPromise, timeOut) =>
     ]);
 
 
-export const updateData = (url = ``, data = {}, timeOut = 50000) => {
-    url = `http://172.31.99.227:8080/api/${url}`;
+export const updateData = (url = ``, data = {}, timeOut = 10000) => {
+    url = `${BASE_URL}${url}`;
     // Default options are marked with *
     return fetchWithTimeOut(fetch(url, {
         method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -82,8 +83,8 @@ export const updateData = (url = ``, data = {}, timeOut = 50000) => {
         }), timeOut);
 };
 
-export const deleteData = (url = ``, timeOut = 50000) => {
-    url = `http://172.31.99.227:8080/api/${url}`;
+export const deleteData = (url = ``, timeOut = 10000) => {
+    url = `${BASE_URL}${url}`;
     // Default options are marked with *
     return fetchWithTimeOut(fetch(url, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.

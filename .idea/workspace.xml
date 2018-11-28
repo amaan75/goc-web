@@ -2,29 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcf3a000-11c5-46ec-b765-e9d87c24d415" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/result/Failure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/result/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/result/Success.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/mongo/MongoPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/mongo/MongoTeam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/components/TeamsTable/TableData/TableData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/components/TeamsTable/TableHeader/TableHeader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/components/TeamsTable/TeamsTable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/components/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/components/utils/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/components/TeamManagement/TeamManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/components/TeamManagement/TeamManagement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/components/utils/cricketApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/components/utils/cricketApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/components/utils/withDataSet.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/components/utils/withDataSet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/PlayerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/PlayerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/TeamDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dao/TeamDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/PlayerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/PlayerDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/TeamDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/dto/TeamDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/service/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/service/MatchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/service/impl/GamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/service/impl/GamesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/utils/MatchUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/io/github/amaan75/cricket/utils/MatchUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,10 +20,11 @@
     <session id="-117767135">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -101,7 +86,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1062">
+            <state relative-caret-position="702">
               <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
             </state>
           </provider>
@@ -166,7 +151,7 @@
       <path value="$PROJECT_DIR$/app/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="809" />
@@ -177,6 +162,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,7 +200,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -276,16 +261,17 @@
       <workItem from="1541410024941" duration="530000" />
       <workItem from="1541410953001" duration="14039000" />
       <workItem from="1542619513537" duration="16000" />
+      <workItem from="1543213318610" duration="597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14585000" />
+    <option name="totallyTimeSpent" value="15182000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -414,7 +400,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
+        <state relative-caret-position="702">
           <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
         </state>
       </provider>

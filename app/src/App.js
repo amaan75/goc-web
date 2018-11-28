@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Container } from 'semantic-ui-react';
-import { PLAYER_FIELD, TEAM_FIELD, HOME_ROUTE, TEAM_MGMT_ROUTE, TEAM_2_KEY, TEAM_1_KEY, TEAM_MGMT_DROPDOWN_KEY, TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, ACTIVE_ITEM_KEY, ADD_TEAM_ONCLICK, UPDATE_TEAM_ONCLICK } from "./components/utils/Constants";
-import { postData, getData, updateData } from "./components/utils/cricketApi";
+import {
+    PLAYER_FIELD,
+    TEAM_FIELD,
+    HOME_ROUTE,
+    TEAM_MGMT_ROUTE,
+    TEAM_2_KEY,
+    TEAM_1_KEY,
+    TEAM_MGMT_DROPDOWN_KEY,
+    TEAM_MGMT_STATE_KEY,
+    MANAGED_TEAM_KEY,
+    ACTIVE_ITEM_KEY,
+    ADD_TEAM_ONCLICK,
+    UPDATE_TEAM_ONCLICK
+} from "./components/utils/Constants";
+import {
+    postData,
+    getData,
+    updateData
+} from "./components/utils/cricketApi";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Nav from './components/Navigation/nav';
 import PlayGame from './components/PlayGame/PlayGame';
 import TeamManagement from './components/TeamManagement/TeamManagement';
-import { setMyState, INITIAL_STATE } from './components/utils/stateUtils';
+import {
+    setMyState,
+    INITIAL_STATE
+} from './components/utils/stateUtils';
 
 
 
@@ -35,7 +55,7 @@ class App extends Component {
     onClick = (e, type) => {
         let url = ``;
         if (type === ADD_TEAM_ONCLICK) {
-            url = `addNewTeam`;
+            url = `addNewTeam/postgres`;
             postData(url, this.state[TEAM_MGMT_STATE_KEY][MANAGED_TEAM_KEY])
                 .then(team => this.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY], team)) // JSON-string from `response.json()` call
                 .catch(error => console.error(error));
@@ -89,6 +109,7 @@ class App extends Component {
             })
             .catch(error => console.log(error));
     }
+
     handleInputChange = (pathArray, value) => {
         this.setState(setMyState(this.state, pathArray, value));
     }

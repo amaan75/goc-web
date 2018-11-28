@@ -5,14 +5,23 @@ import { TEAM_MGMT_DROPDOWN_KEY, TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, ADD_TEAM
 import { prepareOptions } from "../utils/semanticUiUtils";
 import { getData, deleteData } from "../utils/cricketApi";
 import { INITIAL_STATE, getNewTeam } from "../utils/stateUtils";
+import DeleteTeamModal from "./DeleteTeamModal";
 
 class TeamManagement extends React.Component {
 
-    state = { show: false, isLoading: false, isEditable: false }
+    state = {
+        show: false,
+        isLoading: false,
+        isEditable: false,
+        unTouchedFocusedLable: true,
+        showConfirmDeleteModal: false
+    }
 
 
     componentDidMount() {
         this.fetchTeamData(this.props.dropdownStates[TEAM_MGMT_DROPDOWN_KEY]);
+        if (this.focusedLabel)
+            this.focusedLabel.focus();
     }
 
     fetchTeamData = (value) => {
@@ -21,7 +30,10 @@ class TeamManagement extends React.Component {
             getData(`getTeamById/${value}`)
                 .then(team => {
                     this.props.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY], team);
-                    this.setState({ show: true, isLoading: false });
+                    this.setState({ show: true, isLoading: false }, () => {
+                        if (this.focusedLabel)
+                            this.focusedLabel.focus();
+                    });
                 })
                 .catch(error => {
                     console.log(error)
@@ -30,7 +42,12 @@ class TeamManagement extends React.Component {
 
         }
     }
-
+    componentDidUpdate() {
+        if (this.focusedLabel && this.state.unTouchedFocusedLable) {
+            this.focusedLabel.focus();
+            this.setState({ unTouchedFocusedLable: false })
+        }
+    }
     onTabChange = (e, { activeIndex }) => {
         if (activeIndex === 1) {
             this.props.handleInputChange([TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY],
@@ -48,11 +65,18 @@ class TeamManagement extends React.Component {
         this.fetchTeamData(value);
         this.props.onDropdownChangeHandler(e, TEAM_MGMT_DROPDOWN_KEY, value);
     }
-    onClickDeleteHandler = (e) => {
+    onConfirmDeleteHandler = (e) => {
         deleteData(`deleteTeamById/${this.props.dropdownStates[TEAM_MGMT_DROPDOWN_KEY]}`)
             .then(id => alert(`the entity with the ${id} was deleted`))
             .catch(err => console.log(err));
+    }
 
+    onClickDeleteHandler = () => {
+        this.setState({ showConfirmDeleteModal: true })
+    }
+
+    closeConfirmDeleteModal = () => {
+        this.setState({ showConfirmDeleteModal: false })
     }
     render() {
         const { teams, managedTeam, onChange, onClick, dropdownStates } = this.props;
@@ -63,9 +87,11 @@ class TeamManagement extends React.Component {
                 <Grid.Row centered>
                     <Grid.Column width={5}>
 
-                        <Label basic size="big" >
+                        <label id="MYTESTID" tabIndex="0" onFocus={(e) => console.log("got focus bruh")} ref={el => this.focusedLabel = el} >
+                            {//**  basic size="big" >*/
+                            }
                             Edit Team
-                    </Label>
+                        </label>
                     </Grid.Column>
                     <Grid.Column width={5}>
                         <Dropdown
@@ -103,6 +129,16 @@ class TeamManagement extends React.Component {
                         </Grid.Row>
 
                     </React.Fragment>
+                }
+                {
+                    this.state.showConfirmDeleteModal &&
+                    <DeleteTeamModal
+                        showModal={this.state.showConfirmDeleteModal}
+                        closeConfirmDeleteModal={this.closeConfirmDeleteModal}
+                        onConfirmDeleteHandler={this.onConfirmDeleteHandler}
+                        fetchAllTeams={this.props.fetchAllTeams}
+
+                    />
                 }
 
 

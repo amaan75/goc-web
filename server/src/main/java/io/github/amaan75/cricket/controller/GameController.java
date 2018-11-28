@@ -37,6 +37,7 @@ class GameController {
 
     @GetMapping("/" + TEST_ROUTE)
     public Result test() {
+        //noinspection JsonStandardCompliance
         return new Success("THE SERVER IS UP AND RUNNING");
     }
 
@@ -46,14 +47,19 @@ class GameController {
                     MediaType.TEXT_PLAIN_VALUE
             })
     public Result saveTeamData(@RequestBody TeamDto[] teams) {
+        //noinspection JsonStandardCompliance
         return matchService.saveTeamData(Arrays.asList(teams)) != null ?
                 new Success("DATA SAVED") :
                 new Failure("DATA SAVING FAILED");
     }
 
-    @PostMapping("/" + ADD_NEW_TEAM)
-    public Result addNewTeam(@RequestBody TeamDto team) {
-        TeamDto entity = matchService.addNewTeam(team);
+    @PostMapping("/" + ADD_NEW_TEAM + "/{dbName}")
+    public Result addNewTeam(@RequestBody TeamDto team, @PathVariable(required = false) String dbName) {
+        TeamDto entity;
+        if (dbName.equals("mongo"))
+            entity = matchService.addNewTeamToMongo(team);
+        else
+            entity = matchService.addNewTeam(team);
         return entity != null ? new Success(entity) : new Failure("COULDN'T ADD THE TEAM");
     }
 
