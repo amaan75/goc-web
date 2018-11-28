@@ -1,7 +1,7 @@
 package io.github.amaan75.cricket.service.impl;
 
-import io.github.amaan75.cricket.dao.TeamDao;
-import io.github.amaan75.cricket.dao.cruds.TeamDaoRepository;
+import io.github.amaan75.cricket.dao.sql.TeamDao;
+import io.github.amaan75.cricket.dao.sql.cruds.TeamDaoRepository;
 import io.github.amaan75.cricket.dto.TeamDto;
 import io.github.amaan75.cricket.service.MatchService;
 import io.github.amaan75.cricket.utils.MatchUtils;
