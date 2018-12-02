@@ -1,6 +1,13 @@
 import get from "lodash/get";
 import set from "lodash/set";
-import { TEAM_2_KEY, TEAM_1_KEY, TEAM_MGMT_DROPDOWN_KEY, TEAM_MGMT_STATE_KEY, MANAGED_TEAM_KEY, ACTIVE_ITEM_KEY } from "./Constants";
+import {
+    TEAM_2_KEY,
+    TEAM_1_KEY,
+    TEAM_MGMT_DROPDOWN_KEY,
+    TEAM_MGMT_STATE_KEY,
+    MANAGED_TEAM_KEY,
+    ACTIVE_ITEM_KEY
+} from "./Constants";
 
 
 export const setMyState = (state, arr, value) => {
@@ -49,8 +56,7 @@ export const INITIAL_STATE = {
 
         ]
 
-    },
-    {
+    }, {
         id: -108,
         name: "Team 2",
         players: [
@@ -67,8 +73,7 @@ export const INITIAL_STATE = {
             { name: "player 11" }
 
         ]
-    }
-    ],
+    }],
     playGameState: {
         dropdownStates: {
             [TEAM_1_KEY]: "",
